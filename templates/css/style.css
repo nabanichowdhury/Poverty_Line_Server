@@ -1,0 +1,87 @@
+/* main style */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.5;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.responsive-form-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1.5rem;
+}
+
+/* Form styles */
+.form {
+    background-color: #f7fafc;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-input,
+.form-select {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d2d6dc;
+}
+
+.btn-primary {
+    background-color: #4299e1;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #2b6cb0;
+}
+
+/* Prediction text styles */
+.prediction-text {
+    color: #9f7aea;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+
+@media (600px <=width <=768px) {
+    .responsive-form-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 1.5rem;
+    }
+}
+
+@media (0px <=width <=599px) {
+    .responsive-form-container {
+        display: grid;
+        grid-template-columns: auto;
+        gap: 1.5rem;
+    }
+}

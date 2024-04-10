@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poverty line detection</title>
+   
+</head>
+<style>
+    /* main style */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.5;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.responsive-form-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 1.5rem;
+}
+
+/* Form styles */
+.form {
+    background-color: #f7fafc;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-input,
+.form-select {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d2d6dc;
+}
+
+.btn-primary {
+    background-color: #4299e1;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #2b6cb0;
+}
+
+/* Prediction text styles */
+.prediction-text {
+    color: #9f7aea;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+
+@media (600px <=width <=768px) {
+    .responsive-form-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 1.5rem;
+    }
+}
+
+@media (0px <=width <=599px) {
+    .responsive-form-container {
+        display: grid;
+        grid-template-columns: auto;
+        gap: 1.5rem;
+    }
+}
+
+</style>
+
+<body>
+    <div class="container">
+        <h1 class="header">Poverty line detection</h1>
+        <div class="content">
+            <form action="{{ url_for('predict') }}" method="post" class="form">
+                <div class="responsive-form-container">
+                    <div class="form-row">
+                        <label for="education" class="form-label">Age:</label>
+                        <input type="number" name="age" placeholder="Age" class="form-input" />
+                    </div>
+                    <div class="form-row">
+                        <label for="workclass" class="form-label">Select Workclass:</label>
+                        <select id="workclass" name="workclass" class="form-select">
+                            <option value="" disabled selected>Choose an option</option>
+                            <option value="Self-emp-not-inc">Self-emp-not-inc</option>
+                            <option value="Local-gov">Local-gov</option>
+                            <option value="State-gov">State-gov</option>
+                            <option value="Private">Private</option>
+                            <option value="Without-pay">Without-pay</option>
+                            <option value="Federal-gov">Federal-gov</option>
+                            <option value="Self-emp-inc">Self-emp-inc</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="education" class="form-label">Select Education:</label>
+                        <select id="education" name="education" class="form-select">
+                            <option value="" disabled selected>Choose an option</option>
+                            <option value="10th">10th</option>
+                            <option value="Masters">Masters</option>
+                            <option value="5th-6th">5th-6th</option>
+                            <option value="Assoc-acdm">Assoc-acdm</option>
+                            <option value="Assoc-voc">Assoc-voc</option>
+                            <option value="7th-8th">7th-8th</option>
+                            <option value="9th">9th</option>
+                            <option value="HS-grad">HS-grad</option>
+                            <option value="Bachelors">Bachelors</option>
+                            <option value="11th">11th</option>
+                            <option value="1st-4th">1st-4th</option>
+                            <option value="Preschool">Preschool</option>
+                            <option value="12th">12th</option>
+                            <option value="Doctorate">Doctorate</option>
+                            <option value="Some-college">Some-college</option>
+                            <option value="Prof-school">Prof-school</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="occupation" class="form-label">Select Occupation:</label>
+                        <select id="occupation" name="occupation" class="form-select">
+                            <option value="" disabled selected>Choose an option</option>
+                            <option value="Sales">Sales</option>
+                            <option value="Exec-managerial">Exec-managerial</option>
+                            <option value="Prof-specialty">Prof-specialty</option>
+                            <option value="Handlers-cleaners">Handlers-cleaners</option>
+                            <option value="Farming-fishing">Farming-fishing</option>
+                            <option value="Craft-repair">Craft-repair</option>
+                            <option value="Transport-moving">Transport-moving</option>
+                            <option value="Priv-house-serv">Priv-house-serv</option>
+                            <option value="Protective-serv">Protective-serv</option>
+                            <option value="Other-service">Other-service</option>
+                            <option value="Tech-support">Tech-support</option>
+                            <option value="Machine-op-inspct">Machine-op-inspct</option>
+                            <option value="Armed-Forces">Armed-Forces</option>
+                            <option value="Adm-clerical">Adm-clerical</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="gender" class="form-label">Select Gender:</label>
+                        <select id="gender" name="gender" class="form-select">
+                            <option value="" disabled selected>Choose an option</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="education" class="form-label">Capital Gain:</label>
+                        <input type="number" name="capital-gain" placeholder="Capital-gain" class="form-input" />
+                    </div>
+                    <div class="form-row">
+                        <label for="education" class="form-label">Capital Loss:</label>
+                        <input type="number" name="capital-loss" placeholder="Capital-loss" class="form-input" />
+                    </div>
+                    <div class="form-row">
+                        <label for="education" class="form-label">Hours Per Week:</label>
+                        <input type="number" name="hours-per-week" placeholder="Hours-per-week" class="form-input" />
+                    </div>
+                    <div class="form-row">
+                        <label for="education" class="form-label">Income:</label>
+                        <input type="number" name="income" placeholder="Income" class="form-input" />
+                    </div>
+                    <div class="form-row">
+                        <button type="submit" name="submit" class="btn-primary">
+                            Predict
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <h4 class="prediction-text">{{ prediction_text }}</h4>
+</body>
+
+</html>
